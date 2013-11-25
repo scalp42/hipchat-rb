@@ -15,12 +15,13 @@ require 'hipchat'
 module HipChat
   class NotifyRoom < Chef::Handler
 
-    def initialize(api_token, room_name, notify_users=false, report_success=false, excluded_envs=[])
+    def initialize(api_token, room_name, notify_users=false, report_success=false, excluded_envs=[], override_colors={})
       @api_token = api_token
       @room_name = room_name
       @notify_users = notify_users
       @report_success = report_success
       @excluded_envs = excluded_envs
+      @override_colors = override_colors
     end
 
     def report
@@ -31,8 +32,17 @@ module HipChat
               else nil
               end
 
-        color = if run_status.success? then 'green'
-                else 'red'
+        @override_colors.default_proc = proc do |h, k|
+          case k
+            when String then sym = k.to_sym; h[sym] if h.key?(sym)
+            when Symbol then str = k.to_s; h[str] if h.key?(str)
+          end
+        end
+
+        color = if run_status.success?
+                  override_colors[:success].to_s || 'green'
+                else
+                  override_colors[:failure].to_s || 'red'
                 end
 
         if msg
