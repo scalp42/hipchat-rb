@@ -26,7 +26,7 @@ module HipChat
 
     def report
       unless @excluded_envs.include?(node.chef_environment)
-        msg = if run_status.failed? then "Failure on \"#{node.name}\" (\"#{node.chef_environment}\" env): #{run_status.formatted_exception}"
+        msg = if run_status.failed? then "Failure on \"<b>#{node.name}</b>\" (<b>#{node.chef_environment}</b>, <b>#{node['ipaddress']}</b>):\n#{run_status.formatted_exception}"
               elsif run_status.success? && @report_success
                 "Chef run on \"#{node.name}\" completed in #{run_status.elapsed_time.round(2)} seconds"
               else nil
@@ -40,9 +40,9 @@ module HipChat
         end
 
         color = if run_status.success?
-                  override_colors[:success].to_s || 'green'
+                  @override_colors[:success].to_s || 'green'
                 else
-                  override_colors[:failure].to_s || 'red'
+                  @override_colors[:failure].to_s || 'red'
                 end
 
         if msg
