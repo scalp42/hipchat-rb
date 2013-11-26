@@ -1,4 +1,4 @@
-require 'hipchat'
+require 'hipchat-chef'
 
 #
 # Provides a Chef exception handler so you can send information about

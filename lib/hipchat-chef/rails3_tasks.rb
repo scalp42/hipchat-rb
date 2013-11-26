@@ -1,4 +1,4 @@
-require 'hipchat'
+require 'hipchat-chef'
 
 namespace :hipchat do
   desc "Sends a HipChat message as a particular user"

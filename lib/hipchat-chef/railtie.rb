@@ -1,4 +1,4 @@
-require 'hipchat'
+require 'hipchat-chef'
 
 module HipChat
   class Railtie < Rails::Railtie

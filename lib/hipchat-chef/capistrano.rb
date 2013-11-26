@@ -1,4 +1,4 @@
-require 'hipchat'
+require 'hipchat-chef'
 
 Capistrano::Configuration.instance(:must_exist).load do
   set :hipchat_send_notification, false

@@ -1,8 +1,8 @@
 require 'httparty'
 require 'ostruct'
 
-require 'hipchat/railtie' if defined?(Rails::Railtie)
-require "hipchat/version"
+require 'hipchat-chef/railtie' if defined?(Rails::Railtie)
+require "hipchat-chef/version"
 
 module HipChat
   class UnknownRoom         < StandardError; end
